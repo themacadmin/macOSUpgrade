@@ -37,7 +37,9 @@
 #
 # REQUIREMENTS:
 #			- Jamf Pro
-#			- macOS Sierra Installer must be staged in /Users/Shared/
+#			- macOS Sierra Installer must be staged in /Applications
+#				- This will be done via VPP device assignment
+#				- This script shall be scoped to 10.11 Macs with macOS Sierra installer
 #
 #
 # For more information, visit https://github.com/kc9wwh/macOSUpgrade
@@ -47,6 +49,9 @@
 #
 # Created On: January 5th, 2017
 # Updated On: February 14th, 2017
+#
+# Modified by Miles Leacy
+# Updated on: 27 February 2017
 # 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
@@ -70,7 +75,7 @@ Once completed your computer will reboot and begin the upgrade."
 
 ##Icon to be used for userDialog
 ##Default is macOS Sierra Installer logo which is included in the staged installer package
-icon=/Users/Shared/Install\ macOS\ Sierra.app/Contents/Resources/InstallAssistant.icns
+icon="/Applications/Install macOS Sierra.app/Contents/Resources/InstallAssistant.icns"
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # SYSTEM CHECKS
@@ -121,7 +126,7 @@ if [[ ${pwrStatus} == "OK" ]] && [[ ${spaceStatus} == "OK" ]]; then
 
 	##Begin Upgrade
 	/bin/echo "Launching startosinstall..."
-	/Users/Shared/Install\ macOS\ Sierra.app/Contents/Resources/startosinstall --volume / --applicationpath /Users/Shared/Install\ macOS\ Sierra.app --nointeraction --pidtosignal $jamfHelperPID &
+	"/Applications/Install macOS Sierra.app/Contents/Resources/startosinstall" --volume / --applicationpath "/Applications/Install macOS Sierra.app" --nointeraction --pidtosignal $jamfHelperPID &
     /bin/sleep 3
 else
 	/bin/echo "Launching jamfHelper Dialog (Requirements Not Met)..."
